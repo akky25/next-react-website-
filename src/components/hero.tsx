@@ -1,8 +1,13 @@
-export default function Hero() {
+type Props = {
+  title: string;
+  subtitle: string;
+};
+
+export default function Hero({ title, subtitle }: Props) {
   return (
     <div>
-      <h1>CUBE</h1>
-      <p> アウトプットしていくサイト </p>
+      <h1>{title}</h1>
+      <p>{subtitle}</p>
     </div>
   );
 }
