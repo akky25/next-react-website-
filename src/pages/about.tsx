@@ -1,3 +1,4 @@
+import Contact from '@/components/contact';
 import Container from '@/components/container';
 import Hero from '@/components/hero';
 import PostBody from '@/components/post-body';
@@ -30,6 +31,7 @@ export default function About() {
           くりは、これからも続けていきたいです。
         </p>
       </PostBody>
+      <Contact />
     </Container>
   );
 }
