@@ -5,7 +5,7 @@ export type Response = {
   limit: number;
 };
 
-type Content = {
+export type Content = {
   id: string;
   createdAt: string;
   updatedAt: string;
