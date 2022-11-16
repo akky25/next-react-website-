@@ -16,5 +16,6 @@ export const getPostBySlug = async (slug: string) => {
   } catch (err) {
     console.log('-- getPostBySlug');
     console.log(err);
+    throw err;
   }
 };

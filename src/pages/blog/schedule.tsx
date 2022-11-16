@@ -1,14 +1,15 @@
 import { GetStaticProps } from 'next';
 import Container from '@/components/container';
+import PostHeader from '@/components/post-header';
 import { getPostBySlug } from '@/lib/api';
 import { Content } from '@/types/api';
 
 type Props = {
-  title: string | undefined;
-  publish: string | undefined;
-  content: string | undefined;
-  eyecatch: Content['eyecatch'] | undefined;
-  categories: Content['categories'] | undefined;
+  title: string;
+  publish: string;
+  content: string;
+  eyecatch: Content['eyecatch'];
+  categories: Content['categories'];
 };
 
 export default function Schedule({
@@ -20,7 +21,9 @@ export default function Schedule({
 }: Props) {
   return (
     <Container>
-      <h1>{title}</h1>
+      <article>
+        <PostHeader title={title} subtitle="Blog Article" publish={publish} />
+      </article>
     </Container>
   );
 }
@@ -32,12 +35,11 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   return {
     props: {
-      title: post?.title,
-      // title: 1000,
-      publish: post?.publishDate,
-      content: post?.content,
-      eyecatch: post?.eyecatch,
-      categories: post?.categories,
+      title: post.title,
+      publish: post.publishDate,
+      content: post.content,
+      eyecatch: post.eyecatch,
+      categories: post.categories,
     },
   };
 };
