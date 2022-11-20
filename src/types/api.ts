@@ -1,9 +1,16 @@
-export type Response = {
-  contents: Content[];
+type ResponseCommonProps = {
   totalCount: number;
   offset: number;
   limit: number;
 };
+
+export type ResponsePost = {
+  contents: Content[];
+} & ResponseCommonProps;
+
+export type ResponseSlugsAndTitles = {
+  contents: SlugsAndTitles[];
+} & ResponseCommonProps;
 
 export type Category = {
   id: string;
@@ -33,4 +40,9 @@ export type Content = {
   content: string;
   eyecatch?: Eyecatch;
   categories: Category[];
+};
+
+export type SlugsAndTitles = {
+  title: string;
+  slug: string;
 };

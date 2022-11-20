@@ -1,4 +1,4 @@
-import { GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import Container from '@/components/container';
@@ -12,7 +12,7 @@ import {
   TwoColumnMain,
   TwoColumnSidebar,
 } from '@/components/twocolumn';
-import { getPostBySlug } from '@/lib/api';
+import { getAllSlugsAndTitles, getPostBySlug } from '@/lib/api';
 import { eyecatchLocal } from '@/lib/constants';
 import { extractText } from '@/lib/extract-text';
 import { Category, Eyecatch } from '@/types/api';
@@ -73,8 +73,16 @@ export default function Schedule({
   );
 }
 
-export const getStaticProps: GetStaticProps<Props> = async () => {
-  const slug = 'schedule';
+export const getStaticPaths: GetStaticPaths = async () => {
+  const allSlugsAndTitles = await getAllSlugsAndTitles();
+  return {
+    paths: allSlugsAndTitles.map(({ slug }) => `/blog/${slug}`),
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
+  const slug = params?.slug as string;
   const post = await getPostBySlug(slug);
 
   // eyecatch画像が存在しない場合はローカルの代替データを設定
