@@ -1,6 +1,7 @@
 import { GetStaticProps } from 'next';
 import Image from 'next/image';
 import Container from '@/components/container';
+import ConvertBody from '@/components/convert-body';
 import PostBody from '@/components/post-body';
 import PostHeader from '@/components/post-header';
 import {
@@ -43,9 +44,11 @@ export default function Schedule({
         </figure>
         <TwoColumn>
           <TwoColumnMain>
-            <PostBody>{content}</PostBody>
+            <PostBody>
+              <ConvertBody contentHTML={content} />
+            </PostBody>
           </TwoColumnMain>
-          <TwoColumnSidebar>a</TwoColumnSidebar>
+          <TwoColumnSidebar />
         </TwoColumn>
       </article>
     </Container>
