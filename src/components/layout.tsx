@@ -5,6 +5,7 @@ import Header from './header';
 type Props = {
   children: ReactElement;
 };
+
 export default function Layout({ children }: Props) {
   return (
     <>

@@ -15,6 +15,12 @@ export type Category = {
   slug: string;
 };
 
+export type Eyecatch = {
+  url: string;
+  height: number;
+  width: number;
+};
+
 export type Content = {
   id: string;
   createdAt: string;
@@ -25,10 +31,6 @@ export type Content = {
   slug: string;
   publishDate: string;
   content: string;
-  eyecatch: {
-    url: string;
-    height: number;
-    width: number;
-  };
+  eyecatch?: Eyecatch;
   categories: Category[];
 };
