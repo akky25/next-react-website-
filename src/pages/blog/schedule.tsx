@@ -2,6 +2,7 @@ import { GetStaticProps } from 'next';
 import Image from 'next/image';
 import Container from '@/components/container';
 import ConvertBody from '@/components/convert-body';
+import Meta from '@/components/meta';
 import PostBody from '@/components/post-body';
 import PostCategories from '@/components/post-categories';
 import PostHeader from '@/components/post-header';
@@ -11,6 +12,7 @@ import {
   TwoColumnSidebar,
 } from '@/components/twocolumn';
 import { getPostBySlug } from '@/lib/api';
+import { extractText } from '@/lib/extract-text';
 import { Content } from '@/types/api';
 
 type Props = {
@@ -19,6 +21,7 @@ type Props = {
   content: string;
   eyecatch: Content['eyecatch'];
   categories: Content['categories'];
+  description: string;
 };
 
 export default function Schedule({
@@ -27,9 +30,17 @@ export default function Schedule({
   content,
   eyecatch,
   categories,
+  description,
 }: Props) {
   return (
     <Container>
+      <Meta
+        pageTitle={title}
+        pageDesc={description}
+        pageImg={eyecatch.url}
+        pageImgW={eyecatch.width.toString()}
+        pageImgH={eyecatch.height.toString()}
+      />
       <article>
         <PostHeader title={title} subtitle="Blog Article" publish={publish} />
         <figure>
@@ -59,7 +70,6 @@ export default function Schedule({
 }
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  // export const getStaticProps: GetStaticProps = async () => {
   const slug = 'schedule';
   const post = await getPostBySlug(slug);
 
@@ -70,6 +80,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
       content: post.content,
       eyecatch: post.eyecatch,
       categories: post.categories,
+      description: extractText(post.content),
     },
   };
 };
