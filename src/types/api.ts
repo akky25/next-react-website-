@@ -5,6 +5,16 @@ export type Response = {
   limit: number;
 };
 
+export type Category = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  revisedAt: string;
+  name: string;
+  slug: string;
+};
+
 export type Content = {
   id: string;
   createdAt: string;
@@ -20,24 +30,5 @@ export type Content = {
     height: number;
     width: number;
   };
-  categories: [
-    {
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
-      revisedAt: string;
-      name: string;
-      slug: string;
-    },
-    {
-      id: string;
-      createdAt: string;
-      updatedAt: string;
-      publishedAt: string;
-      revisedAt: string;
-      name: string;
-      slug: string;
-    },
-  ];
+  categories: Category[];
 };
