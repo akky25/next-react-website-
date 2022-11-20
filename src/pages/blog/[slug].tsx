@@ -1,9 +1,10 @@
-import { GetStaticPaths, GetStaticProps } from 'next';
+import next, { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import Container from '@/components/container';
 import ConvertBody from '@/components/convert-body';
 import Meta from '@/components/meta';
+import Pagination from '@/components/pagination';
 import PostBody from '@/components/post-body';
 import PostCategories from '@/components/post-categories';
 import PostHeader from '@/components/post-header';
@@ -15,7 +16,8 @@ import {
 import { getAllSlugsAndTitles, getPostBySlug } from '@/lib/api';
 import { eyecatchLocal } from '@/lib/constants';
 import { extractText } from '@/lib/extract-text';
-import { Category, Eyecatch } from '@/types/api';
+import { prevNextPost } from '@/lib/prev-next-post';
+import { Category, Eyecatch, SlugAndTitle } from '@/types/api';
 
 type Props = {
   title: string;
@@ -24,6 +26,8 @@ type Props = {
   eyecatch: Eyecatch & { blurDataURL: string };
   categories: Category[];
   description: string;
+  prevPost: SlugAndTitle;
+  nextPost: SlugAndTitle;
 };
 
 export default function Schedule({
@@ -33,6 +37,8 @@ export default function Schedule({
   eyecatch,
   categories,
   description,
+  prevPost,
+  nextPost,
 }: Props) {
   return (
     <Container>
@@ -68,6 +74,12 @@ export default function Schedule({
             <PostCategories categories={categories} />
           </TwoColumnSidebar>
         </TwoColumn>
+        <Pagination
+          prevText={prevPost.title}
+          prevUrl={`/blog/${prevPost.slug}`}
+          nextText={nextPost.title}
+          nextUrl={`/blog/${nextPost.slug}`}
+        />
       </article>
     </Container>
   );
@@ -88,6 +100,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   // eyecatch画像が存在しない場合はローカルの代替データを設定
   const eyecatch: Eyecatch = post.eyecatch ?? eyecatchLocal;
 
+  const allSlugsAndTitles = await getAllSlugsAndTitles();
+  const [prevPost, nextPost] = prevNextPost(allSlugsAndTitles, slug);
+
   // プレースホルダのブラー画像を生成(base64)
   const { base64: blurDataURL } = await getPlaiceholder(eyecatch.url);
 
@@ -99,6 +114,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
       eyecatch: { ...eyecatch, blurDataURL },
       categories: post.categories,
       description: extractText(post.content),
+      prevPost: prevPost,
+      nextPost: nextPost,
     },
   };
 };

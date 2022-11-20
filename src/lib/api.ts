@@ -24,7 +24,7 @@ export const getAllSlugsAndTitles = async (limit = 100) => {
   try {
     const slugsAnsTiles = await client.get<ResponseSlugsAndTitles>({
       endpoint: 'blogs',
-      queries: { fields: 'tittle,slug', orders: '-publishDate', limit },
+      queries: { fields: 'title,slug', orders: '-publishDate', limit },
     });
     return slugsAnsTiles.contents;
   } catch (err) {

@@ -9,7 +9,7 @@ export type ResponsePost = {
 } & ResponseCommonProps;
 
 export type ResponseSlugsAndTitles = {
-  contents: SlugsAndTitles[];
+  contents: SlugAndTitle[];
 } & ResponseCommonProps;
 
 export type Category = {
@@ -42,7 +42,7 @@ export type Content = {
   categories: Category[];
 };
 
-export type SlugsAndTitles = {
+export type SlugAndTitle = {
   title: string;
   slug: string;
 };
