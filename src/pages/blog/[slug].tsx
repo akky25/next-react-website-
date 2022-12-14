@@ -1,4 +1,4 @@
-import next, { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import { getPlaiceholder } from 'plaiceholder';
 import Container from '@/components/container';

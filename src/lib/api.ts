@@ -1,5 +1,9 @@
 import { createClient } from 'microcms-js-sdk';
-import { ResponsePost, ResponseSlugsAndTitles } from '@/types/api';
+import {
+  ResponseAllPosts,
+  ResponsePost,
+  ResponseSlugsAndTitles,
+} from '@/types/api';
 
 export const client = createClient({
   serviceDomain: process.env.SERVICE_DOMAIN ?? '',
@@ -33,3 +37,21 @@ export const getAllSlugsAndTitles = async (limit = 100) => {
     throw err;
   }
 };
+
+export async function getAllPosts(limit = 100) {
+  try {
+    const posts = await client.get<ResponseAllPosts>({
+      endpoint: 'blogs',
+      queries: {
+        fields: 'title,slug,eyecatch',
+        orders: '-publishDate',
+        limit: limit,
+      },
+    });
+    return posts.contents;
+  } catch (err) {
+    console.log('~~ getAllPosts ~~');
+    console.log(err);
+    throw err;
+  }
+}
