@@ -11,6 +11,10 @@ export type ResponseSlugsAndTitles = Response<SlugAndTitle>;
 
 export type ResponseAllPosts = Response<Post>;
 
+export type ResponseAllCategories = Response<
+  Pick<Category, 'id' | 'name' | 'slug'>
+>;
+
 export type Category = {
   id: string;
   createdAt: string;

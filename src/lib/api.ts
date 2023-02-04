@@ -1,5 +1,6 @@
 import { createClient } from 'microcms-js-sdk';
 import {
+  ResponseAllCategories,
   ResponseAllPosts,
   ResponsePost,
   ResponseSlugsAndTitles,
@@ -51,6 +52,23 @@ export async function getAllPosts(limit = 100) {
     return posts.contents;
   } catch (err) {
     console.log('~~ getAllPosts ~~');
+    console.log(err);
+    throw err;
+  }
+}
+
+export async function getAllCategories(limit = 100) {
+  try {
+    const categories = await client.get<ResponseAllCategories>({
+      endpoint: 'categories',
+      queries: {
+        fields: 'name,id,slug',
+        limit: limit,
+      },
+    });
+    return categories.contents;
+  } catch (err) {
+    console.log('~~ getAllCategories ~~');
     console.log(err);
     throw err;
   }
