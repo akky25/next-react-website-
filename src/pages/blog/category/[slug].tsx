@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { getPlaiceholder } from 'plaiceholder';
 import Container from '@/components/container';
+import Meta from '@/components/meta';
 import PostHeader from '@/components/post-header';
 import Posts from '@/components/posts';
 import { getAllCategories, getAllPostsByCategory } from '@/lib/api';
@@ -15,6 +16,7 @@ type Props = {
 export default function Category({ name, posts }: Props) {
   return (
     <Container>
+      <Meta pageTitle={name} pageDesc={`${name} に関する記事 `} />
       <PostHeader title={name} subtitle="Blog Category" />
       <Posts posts={posts} />
     </Container>
